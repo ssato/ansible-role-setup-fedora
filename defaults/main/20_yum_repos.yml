@@ -1,0 +1,40 @@
+---
+# yamllint disable rule:line-length
+
+sfw_rpm_keys:
+  # .. seealso:: https://rpmfusion.org/keys
+  - https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020
+  - https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-2020
+
+# Some special RPMs to install before other RPMs, to install yum .repo files to
+# install other RPMs for example.
+sfw_pre_rpms:
+  - fedora-workstation-repositories
+
+  # .. seealso:: https://docs.fedoraproject.org/en-US/quick-docs/setup_rpmfusion/
+  - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ fedora_version }}.noarch.rpm
+  - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ fedora_version }}.noarch.rpm
+  - dnf-plugins-core
+
+sfw_copr_repos:
+  - ssato/python-anyconfig
+  - ssato/extras
+
+sfw_yum_repos:
+  # Its .repo file is contained in fedora-workstation-repositories rpm and it
+  # just needs to be enabled.
+  - name: google-chrome
+    enabled: true
+
+  # Visual Studio Code
+  # .. seealso:: https://code.visualstudio.com/docs/setup/linux#_rhel-fedora-and-centos-based-distributions
+  - name: vscode
+    description: Visual Studio Code
+    baseurl: https://packages.microsoft.com/yumrepos/vscode
+    gpgcakey: https://packages.microsoft.com/keys/microsoft.asc
+
+  # https://cloud.google.com/sdk/docs/install#rpm
+  - name: google-cloud-cli
+    description: Google Cloud Cli
+    baseurl: https://packages.cloud.google.com/yum/repos/cloud-sdk-el8-x86_64
+    gpgcakey: https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg

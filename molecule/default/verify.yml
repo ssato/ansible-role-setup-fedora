@@ -1,0 +1,8 @@
+---
+- name: Verification
+  hosts: all
+  gather_facts: true
+  vars:
+    sfw_verification_mode: true
+  roles:
+    - ssato.setup_fedora_workstation

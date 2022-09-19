@@ -1,0 +1,11 @@
+---
+- name: Detect the fedora version
+  ansible.builtin.command: rpm -E %fedora
+  register: __res
+  changed_when: false
+  failed_when:
+    - __res.rc != 0
+
+- name: Set the fedora version
+  ansible.builtin.set_fact:
+    fedora_version: "{{ __res.stdout }}"

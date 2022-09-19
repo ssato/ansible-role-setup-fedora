@@ -1,0 +1,4 @@
+---
+# It can be detectecd dynamically using rpm like `rpm -E %fedora`.
+# ex. 37
+fedora_version: 37  # Default.

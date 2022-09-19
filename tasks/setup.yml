@@ -1,0 +1,28 @@
+---
+- name: Initializations
+  ansible.builtin.import_tasks: setup_init.yml
+
+- name: Setup yum repos
+  ansible.builtin.import_tasks: setup_yum_repos.yml
+  become: true
+
+- name: Install RPMs
+  ansible.builtin.import_tasks: install_packages.yml
+  become: true
+
+- name: Setup the system
+  ansible.builtin.import_tasks: setup_system.yml
+  become: true
+  when:
+    - sfw_setup_system_commands | bool
+
+- name: Setup for the user
+  ansible.builtin.import_tasks: setup_user.yml
+
+- name: Recover my ~/ data from the backup
+  ansible.builtin.import_tasks: recover_my_home.yml
+  when:
+    - sfw_do_recovery
+
+- name: Cleanups
+  ansible.builtin.import_tasks: cleanups.yml

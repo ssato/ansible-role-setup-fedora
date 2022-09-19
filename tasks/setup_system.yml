@@ -1,0 +1,6 @@
+---
+- name: Do setup
+  ansible.builtin.command: >-
+    {{ item }}
+  changed_when: false
+  loop: "{{ sfw_setup_system_commands }}"

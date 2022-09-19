@@ -1,0 +1,11 @@
+---
+sfw_user: ssato
+
+# Commands run by root for setup system
+sfw_setup_system_commands:
+  # .. seealso:: https://fedoramagazine.org/howto-change-the-plymouth-theme/
+  - plymouth-set-default-theme spinfinity -R
+
+# Commands run by user for setup
+sfw_setup_user_commands:
+  - gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"

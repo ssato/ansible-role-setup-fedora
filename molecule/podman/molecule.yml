@@ -1,0 +1,22 @@
+---
+dependency:
+  name: galaxy
+  options:
+    requirements-file: meta/requirements.yml
+lint: |
+  set -e
+  yamllint -c tests/yamllint.cfg .
+  ansible-lint -c tests/ansible-lint.yml .
+driver:
+  name: podman
+# https://molecule.readthedocs.io/en/latest/examples.html#systemd-container
+platforms:
+  - name: instance
+    image: docker.io/fedora:latest
+    pre_build_image: true
+provisioner:
+  name: ansible
+  options:
+    vvv: true
+verifier:
+  name: ansible

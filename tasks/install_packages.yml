@@ -1,0 +1,6 @@
+---
+- name: Install RPMs
+  ansible.builtin.dnf:
+    name: "{{ sfw_rpm_packages }}"
+    state: present
+    skip_broken: true

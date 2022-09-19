@@ -1,0 +1,25 @@
+---
+- name: Input the source of backup data
+  ansible.builtin.pause:
+    minutes: 5
+    prompt: Please input the path to the source of backup data to sync from
+  changed_when: false
+  register: __res
+
+- name: Check the user input is valid value
+  ansible.builtin.assert:
+    that:
+      - not __res.user_input
+
+- name: Test if the source exists and expected data
+  ansible.builtin.command: >-
+    test -f {{ __res.user_input }}/{{ sfw_backup_data_check_file }}
+  register: __res
+  changed_when: false
+  failed_when:
+    - __res.rc != 0
+
+- name: Recover my data from the backup
+  ansible.builtin.command: >-
+    rsync -avz {{ __res.user_input }}/ ~{{ sfw_user }}/
+  changed_when: false

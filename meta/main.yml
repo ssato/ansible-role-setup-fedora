@@ -1,0 +1,28 @@
+---
+galaxy_info:
+  role_name: setup_fedora_workstation
+  namespace: ssato
+  author: Satoru SATOH
+  description: Setup my Fedora workstation
+
+  # yamllint disable-line rule:line-length
+  issue_tracker_url: https://github.com/ssato/ansible-role-setup-fedora-workstation/issues
+  license: MIT
+
+  min_ansible_version: 2.11
+
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+
+    - name: EL
+      versions:
+        - 6
+        - 7
+        - 8
+
+  galaxy_tags:
+    - el
+
+dependencies: []

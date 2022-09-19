@@ -1,0 +1,13 @@
+---
+- name: Pre checks
+  ansible.builtin.import_tasks: pre.yml
+
+- name: Setup and cleanup
+  ansible.builtin.import_tasks: setup.yml
+  when:
+    - not sfw_verification_mode
+
+- name: Run tests
+  ansible.builtin.import_tasks: tests.yml
+  when:
+    - sfw_verification_mode

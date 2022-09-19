@@ -1,0 +1,4 @@
+---
+sfw_do_recovery: false
+
+sfw_backup_data_check_file: repos/config.git/core/ssh/lp5.conf

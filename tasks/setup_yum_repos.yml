@@ -1,0 +1,46 @@
+---
+- name: Import RPM keys
+  ansible.builtin.rpm_key:
+    key: "{{ item }}"
+    state: present
+  loop: "{{ sfw_rpm_keys }}"
+
+- name: Install RPMs to setup yum repos
+  ansible.builtin.package:
+    name: "{{ sfw_pre_rpms }}"
+    state: present
+
+# Alt. Use community.general.copr instead.
+- name: Enalbe some copr yum repos
+  ansible.builtin.command: >-
+    dnf copr enable -y {{ item }}
+  loop: "{{ sfw_copr_repos }}"
+  changed_when: false
+
+- name: Enable some yum repos
+  ansible.builtin.command: >-
+    dnf config-manager --set-enabled
+      {{ sfw_yum_repos | selectattr('enabled', 'defined')
+                       | selectattr('enabled')
+                       | map(attribute='name')
+                       | join(' ') }}
+  changed_when: false
+
+- name: Import gpg keys
+  ansible.builtin.command: >-
+    rpm --import {{ item.gpgcakey }}
+  loop: >-
+    {{ sfw_yum_repos | selectattr('gpgcakey', 'defined')
+                     | list }}
+
+- name: Setup and enable some yum repos manually
+  ansible.builtin.yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.description | d(item.name) }}"
+    file: "{{ item.file | d(item.name) }}"
+    baseurl: "{{ item.baseurl }}"
+    gpgcakey: "{{ item.gpgcakey }}"
+    gpgcheck: true
+  loop: >-
+    {{ sfw_yum_repos | selectattr('gpgcakey', 'defined')
+                     | list }}

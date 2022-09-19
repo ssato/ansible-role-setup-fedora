@@ -1,0 +1,26 @@
+---
+dependency:
+  name: galaxy
+  options:
+    requirements-file: meta/requirements.yml
+lint: |
+  set -e
+  yamllint -c tests/yamllint.cfg .
+  ansible-lint -c tests/ansible-lint.yml .
+driver:
+  name: delegated
+  options:
+    managed: false
+    ansible_connection_options:
+      ansible_connection: local
+platforms:
+  - name: instance-localhost
+provisioner:
+  name: ansible
+  options:
+    vv: true
+    become: true
+verifier:
+  name: ansible
+  options:
+    become: true
