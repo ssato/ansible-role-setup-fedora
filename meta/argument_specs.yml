@@ -1,0 +1,72 @@
+---
+argument_specs:
+  main:
+    short_description: Setup my fedora workstation
+    description: |
+      An example ansible role to setup fedora workstation for my usecases
+    author:
+      - Satoru SATOH <ss@gnome.gr.jp>
+    options:
+      fedora_version:
+        description: Major version of the fedora to use
+        default: 37
+        type: int
+        required: true
+      sfw_rpm_keys:
+        description: A list of RPM gpg pub keys to import
+        type: list
+        required: true
+        elements: str
+      sfw_pre_rpms:
+        description: A list of RPMs to install and make yum repos available
+        type: list
+        elements: str
+      sfw_copr_repos:
+        description: A list of copr repo names to enable
+        type: list
+        elements: str
+      sfw_yum_repos:
+        description: A list of dict gives yum repo info to use later
+        type: list
+        elements: dict
+        options:
+          name:
+            description: The name of the repo
+            type: str
+            required: true
+          enabled:
+            description: Set it true if you want to just enable the repo
+            type: bool
+          description:
+            description: The description of the repo
+            type: str
+          baseurl:
+            description: The base url of the repo
+            type: str
+          gpgcakey:
+            description: The GNUPg CA key for the repo
+      sfw_rpm_packages:
+        description: A list of RPMs to install
+        type: list
+        elements: str
+      sfw_user:
+        description: The user to use
+        type: str
+        required: true
+      sfw_setup_system_commands:
+        description: A list of commands to setup system
+        type: list
+        elements: str
+      sfw_setup_user_commands:
+        description: A list of commands to setup for the user
+        type: list
+        elements: str
+      sfw_do_recovery:
+        description: Set it to true if you want to recover from the old data
+        type: bool
+        default: false
+      sfw_backup_data_check_file:
+        description: The file to detect if given data is for tests
+        type: str
+      sfw_verification_mode:
+        description: Set it to true to run tests
