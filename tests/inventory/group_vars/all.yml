@@ -1,0 +1,13 @@
+---
+sfw_rpm_packages:
+  # [updates]
+  - alacritty
+
+  # [vscode]
+  - code
+
+  # [rpmfusion-free]
+  - h264enc
+
+  # [ssato/anyconfig]
+  - python3-anytemplate
