@@ -9,7 +9,6 @@ argument_specs:
     options:
       fedora_version:
         description: Major version of the fedora to use
-        default: 37
         type: int
         required: true
       sfw_rpm_keys:
