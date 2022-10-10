@@ -20,7 +20,23 @@ provisioner:
   options:
     vv: true
     become: true
+  inventory:
+    links:
+      group_vars: ../../tests/inventory/group_vars
 verifier:
   name: ansible
-  options:
-    become: true
+scenario:
+  test_sequence:
+    - dependency
+    - lint
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence
+    - side_effect
+    - verify
+    - cleanup
+    - destroy
